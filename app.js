@@ -23,7 +23,6 @@ app.use(cors(corsOptions));
 
 dotenv.config({ path: "./config.env" });
 
-app.use(cors());
 app.use(express.static("public"));
 app.use(express.json());
 app.use(cookieParser());
