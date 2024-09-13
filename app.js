@@ -1,6 +1,6 @@
 const express = require("express");
 const dotenv = require("dotenv");
-const { default: mongoose } = require("mongoose");
+const mongoose = require("mongoose");
 const authRoutes = require("./routes/authRoutes");
 const patientRoutes = require("./routes/patientRoutes");
 const cookieParser = require("cookie-parser");
@@ -11,14 +11,12 @@ const logoutRoute = require("./routes/logoutRoute");
 const cors = require("cors");
 const app = express();
 
-// Add your Vercel frontend URL here
+// CORS setup
 const corsOptions = {
-  origin: 'https://hms-130924.vercel.app/',  // Replace with your Vercel frontend URL
-  credentials: true,  // This allows the backend to include credentials (cookies, authorization headers) in requests
-  optionsSuccessStatus: 200  // Some browsers (legacy browsers like IE11) choke on 204, so we use 200 as a success status
+  origin: ['https://hms-130924.vercel.app', 'http://localhost:3000'],  // Replace with your frontend URL(s)
+  credentials: true,
+  optionsSuccessStatus: 200
 };
-
-// Apply CORS middleware to allow requests from your frontend
 app.use(cors(corsOptions));
 
 dotenv.config({ path: "./config.env" });
@@ -30,29 +28,30 @@ app.use(cookieParser());
 const dbURI = process.env.DATABASE;
 const port = process.env.PORT || 5000;
 
+// Log database URI for debugging (optional)
+console.log("Database URI:", dbURI);
+
 mongoose
   .connect(dbURI)
-  .then((result) => {
-    app.listen(port);
-    console.log("connected to db and listening at port 5000");
+  .then(() => {
+    app.listen(port, () => {
+      console.log(`Connected to DB and listening at port ${port}`);
+    });
   })
   .catch((err) => {
-    app.listen(port);
-    app.get("/", (req, res) => {
-      res.send(
-        "Something Went Wrong! Please Try again after some time, if problem persists please contact us."
-      );
-    });
+    console.error("Database connection failed:", err);
+    process.exit(1);  // Terminate process if DB connection fails
   });
 
+// Routes
 app.get("/", (req, res) => res.send("server listening at 5000 port!"));
-
 app.use(authRoutes);
 app.use(registerRoute);
 app.use(doctorRoute);
 app.use(patientRoutes);
 app.use(adminRoutes);
 app.use(logoutRoute);
+
 
 
 // if (process.env.NODE_ENV == "production") {
