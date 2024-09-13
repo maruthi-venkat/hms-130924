@@ -13,7 +13,7 @@ const app = express();
 
 // Add your Vercel frontend URL here
 const corsOptions = {
-  origin: 'https://hms-130924-c4ohh8ksm-maruthivenkatreddys-projects.vercel.app/',  // Replace with your Vercel frontend URL
+  origin: 'https://hms-130924.vercel.app/',  // Replace with your Vercel frontend URL
   credentials: true,  // This allows the backend to include credentials (cookies, authorization headers) in requests
   optionsSuccessStatus: 200  // Some browsers (legacy browsers like IE11) choke on 204, so we use 200 as a success status
 };
