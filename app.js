@@ -10,24 +10,23 @@ const adminRoutes = require("./routes/adminRoutes");
 const logoutRoute = require("./routes/logoutRoute");
 const cors = require("cors");
 const app = express();
-
-app.use((req, res, next) => {
-  res.header('Access-Control-Allow-Origin', 'https://hms-130924.vercel.app');
-  res.header('Access-Control-Allow-Methods', 'GET, POST, PUT, DELETE');
-  res.header('Access-Control-Allow-Headers', 'Content-Type, Authorization');
-  next();
-});
+dotenv.config({ path: "./config.env" });
 
 // CORS setup
 const corsOptions = {
-  origin: ['https://hms-130924.vercel.app', 'http://localhost:3000'],  // Replace with your frontend URL(s)
-  credentials: true,
-  optionsSuccessStatus: 200
+  origin: ['https://hms-130924.vercel.app', 'http://localhost:3000'],  // Frontend URLs
+  credentials: true,  // Allow cookies and credentials to be sent
+  optionsSuccessStatus: 200,  // For legacy browsers
+  allowedHeaders: ['Content-Type', 'Authorization'],  // Specify the headers you're allowing
+  methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],  // Allow these HTTP methods
 };
+
 app.use(cors(corsOptions));
 
-dotenv.config({ path: "./config.env" });
+// Handle preflight requests (OPTIONS)
+app.options('*', cors(corsOptions));
 
+// Middlewares
 app.use(express.static("public"));
 app.use(express.json());
 app.use(cookieParser());
