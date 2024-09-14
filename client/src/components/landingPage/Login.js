@@ -31,7 +31,7 @@ export default function Login(props) {
 
   const handlePatientLogin = async (healthID, password) => {
     setLoading(true);
-    const res = await fetch("/login/patient", {
+    const res = await fetch("https://hms-130924.onrender.com/login/patient", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -111,10 +111,10 @@ export default function Login(props) {
         handlePatientLogin(username, password);
         break;
       case "Doctor":
-        handleDoctorAdminLogin(username, password, "/login/doctor");
+        handleDoctorAdminLogin(username, password, "https://hms-130924.onrender.com/login/doctor");
         break;
       case "Admin":
-        handleDoctorAdminLogin(username, password, "/login/admin");
+        handleDoctorAdminLogin(username, password, "https://hms-130924.onrender.com/login/admin");
         break;
       default:
         break;
