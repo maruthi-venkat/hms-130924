@@ -8,7 +8,7 @@ const PatientList = (props) => {
 
   useEffect(() => {
     async function fetchPatientList() {
-      const res = await fetch("/patientlist", {
+      const res = await fetch("https://hms-130924.onrender.com/patientlist", {
         credentials: "include",
       });
       const data = await res.json();
@@ -24,7 +24,7 @@ const PatientList = (props) => {
       }
     }
     fetchPatientList();
-  }, [patientList]);
+  }, []);
 
   return (
     <div className="m-4 mt-4 font-poppins col-span-10">
