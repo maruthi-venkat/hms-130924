@@ -11,6 +11,13 @@ const logoutRoute = require("./routes/logoutRoute");
 const cors = require("cors");
 const app = express();
 
+app.use((req, res, next) => {
+  res.header('Access-Control-Allow-Origin', 'https://hms-130924.vercel.app');
+  res.header('Access-Control-Allow-Methods', 'GET, POST, PUT, DELETE');
+  res.header('Access-Control-Allow-Headers', 'Content-Type, Authorization');
+  next();
+});
+
 // CORS setup
 const corsOptions = {
   origin: ['https://hms-130924.vercel.app', 'http://localhost:3000'],  // Replace with your frontend URL(s)
