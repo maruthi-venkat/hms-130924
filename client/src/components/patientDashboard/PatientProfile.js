@@ -55,7 +55,7 @@ const PatientProfile = (props) => {
   useEffect(() => {
     async function getpatient() {
       try {
-      const res = await fetch("/getpatient");
+      const res = await fetch("https://hms-130924.onrender.com/getpatient");
       const data = await res.json();
       console.log(data);
         
