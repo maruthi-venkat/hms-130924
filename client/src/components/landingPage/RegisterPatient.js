@@ -87,7 +87,7 @@ export default function Register(props) {
     if (patient.password === confirmPassword) {
       setLoading(true);
       e.preventDefault();
-      const res = await fetch("/register/patient", {
+      const res = await fetch("https://hms-130924.onrender.com/register/patient", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
