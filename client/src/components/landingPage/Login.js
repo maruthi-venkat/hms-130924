@@ -61,7 +61,7 @@ export default function Login(props) {
 
   const handleDoctorAdminLogin = async (email, password, path) => {
     setLoading(true);
-    const res = await fetch(path, {
+    const res = await fetch(`https://hms-130924.onrender.com/${path}`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
