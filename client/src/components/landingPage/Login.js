@@ -14,16 +14,16 @@ export default function Login(props) {
 
   useEffect(() => {
     const auth = async () => {
-      const res = await fetch("/auth");
+      const res = await fetch("https://hms-130924.onrender.com/auth");
       const data = await res.json();
       if (data.msg === "Doctor Login Found") {
-        navigate("/doctor/dashboard");
+        navigate("https://hms-130924.onrender.com/doctor/dashboard");
       }
       if (data.msg === "Admin Login Found") {
-        navigate("/admin/dashboard");
+        navigate("https://hms-130924.onrender.com/admin/dashboard");
       }
       if (data.msg === "Patient Login Found") {
-        navigate("/patient/dashboard");
+        navigate("https://hms-130924.onrender.com/patient/dashboard");
       }
     };
     auth();
@@ -55,7 +55,7 @@ export default function Login(props) {
         message: "Logged in Successfully!!!",
       });
       props.setToastShow(true);
-      navigate("/patient/dashboard");
+      navigate("https://hms-130924.onrender.com/patient/dashboard");
     }
   };
 
