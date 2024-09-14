@@ -8,7 +8,7 @@ const PatientList = (props) => {
 
   useEffect(() => {
     async function fetchPatientList() {
-      const res = await fetch("/patientlist", {
+      const res = await fetch("https://hms-130924.onrender.com/patientlist", {
         credentials: "include",
       });
       const data = await res.json();
@@ -21,6 +21,9 @@ const PatientList = (props) => {
         navigate("/");
       } else {
         setPatientList(data.patientlist);
+      } catch (error) {
+        console.error("Error fetching patient list:", error);
+        // You could handle additional error cases here
       }
     }
     fetchPatientList();
