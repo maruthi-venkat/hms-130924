@@ -53,13 +53,24 @@ const PatientProfile = (props) => {
     },
   });
   useEffect(() => {
-    async function getpatient() {
-      try {
-      const res = await fetch("https://hms-130924.onrender.com/getpatient");
+    const getpatient = async () => {
+    try {
+      // Fetch patient data with cookies included
+      const res = await fetch("https://hms-130924.onrender.com/getpatient", {
+        method: 'GET',  // Specify the method explicitly
+        credentials: 'include'  // Include cookies with the request
+      });
+  
+      // Check if the response is ok (status code in the range 200-299)
+      if (!res.ok) {
+        throw new Error('Network response was not ok');
+      }
+  
+      // Parse the JSON data from the response
       const data = await res.json();
-      console.log(data);
-        
-      if (data.AuthError) {
+  
+      // Handle authentication errors
+      if (data.error) {
         props.settoastCondition({
           status: "info",
           message: "Please Login to proceed!!!",
@@ -67,12 +78,19 @@ const PatientProfile = (props) => {
         props.setToastShow(true);
         navigate("/");
       } else {
+        // Set patient data to state
         setPatient(data.patient);
       }
-      } catch (error) {
-      console.error("Error fetching patient data:", error);
+    } catch (error) {
+      console.error("Failed to fetch patient data:", error);
+      props.settoastCondition({
+        status: "error",
+        message: "Failed to load patient data.",
+      });
+      props.setToastShow(true);
     }
-    }
+  };
+
     getpatient();
   }, []);
 
