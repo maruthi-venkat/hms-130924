@@ -6,17 +6,24 @@ const requirePatientAuth = (req, res, next) => {
   if (token) {
     jwt.verify(token, process.env.SECRET_KEY, async (err, decodedToken) => {
       if (err) {
-        let AuthError = { error: "Patient is not authenticated!" };
-        res.status(401).send({ AuthError });
+        console.error("Authentication error:", err);
+        return res.status(401).json({ error: "Patient is not authenticated!" });
       } else {
-        const patient = await Patient.findById(decodedToken.id);
-        req.patient = patient;
-        next();
+        try {
+          const patient = await Patient.findById(decodedToken.id);
+          if (!patient) {
+            return res.status(401).json({ error: "Patient not found!" });
+          }
+          req.patient = patient;
+          next();
+        } catch (err) {
+          console.error("Database error:", err);
+          return res.status(500).json({ error: "Internal server error" });
+        }
       }
     });
   } else {
-    let AuthError = { error: "Patient is not authenticated!" };
-    res.status(401).send({ AuthError });
+    return res.status(401).json({ error: "Token not found!" });
   }
 };
 
