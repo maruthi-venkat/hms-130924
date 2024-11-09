@@ -1,6 +1,6 @@
 <<<<<<< HEAD
 
-# Hey, Welcome to Repo of Public Health Record Management System! 👋
+# Hey, Welcome to Repo of Hospital Management System! 👋
 
 
 ## Run Locally
